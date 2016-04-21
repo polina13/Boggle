@@ -2,8 +2,10 @@ package com.mklgallegos.boggle;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Random;
@@ -12,9 +14,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = MainActivity.class.getSimpleName();
     @Bind(R.id.testTextView) TextView mTestTextView;
     @Bind(R.id.generateNewStringButton) Button mGenerateNewStringButton;
     @Bind(R.id.shuffleStringButton) Button mShuffleStringButton;
+    @Bind(R.id.addWordButton) Button mAddWordButton;
+    @Bind(R.id.inputStringEditText) EditText  mInputStringEditText;
 
     public String generateString() {
         Random random = new Random();
@@ -63,6 +68,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mTestTextView.setText(shuffleString(mTestTextView.getText().toString()));
+            }
+        });
+
+        mAddWordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //collect input from user
+                String userInput = mInputStringEditText.getText().toString();
+
+                //log inputs
+                Log.d(TAG, userInput);
             }
         });
     }
