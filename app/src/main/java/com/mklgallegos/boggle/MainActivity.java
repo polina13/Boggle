@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
     @Bind(R.id.testTextView) TextView mTestTextView;
     @Bind(R.id.generateNewStringButton) Button mGenerateNewStringButton;
+    @Bind(R.id.shuffleStringButton) Button mShuffleStringButton;
 
     public String generateString() {
         Random random = new Random();
@@ -26,17 +27,22 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 6; i < 8; i++) {
             text[i] = vowels.charAt(random.nextInt(vowels.length()));
         }
-
-//      Scramble
-        for( int i=0 ; i<text.length ; i++ ) {
-            int j = random.nextInt(text.length);
-            // Swap letters
-            char temp = text[i]; text[i] = text[j];  text[j] = temp;
-        }
         return new String(text);
     }
 
-
+    public String shuffleString(String text) {
+        Random random = new Random();
+        //convert string to array of characters
+        char[] charArray = text.toCharArray();
+        //run array of characters through shuffle algorithm
+        for( int i=0 ; i<charArray.length ; i++ ) {
+            int j = random.nextInt(charArray.length);
+            // Swap letters
+            char temp = charArray[i]; charArray[i] = charArray[j];  charArray[j] = temp;
+        }
+        //return string
+        return new String(charArray);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +55,14 @@ public class MainActivity extends AppCompatActivity {
         mGenerateNewStringButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTestTextView.setText(generateString());
+                mTestTextView.setText(shuffleString(generateString()));
+            }
+        });
+
+        mShuffleStringButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTestTextView.setText(shuffleString(mTestTextView.getText().toString()));
             }
         });
     }

@@ -35,4 +35,14 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="41dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shuffle String"
+        android:id="@+id/shuffleStringButton"
+        android:layout_marginTop="40dp"
+        android:width="40dp"
+        android:layout_below="@+id/testTextView"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
