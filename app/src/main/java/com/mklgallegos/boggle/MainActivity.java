@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import butterknife.Bind;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.shuffleStringButton) Button mShuffleStringButton;
     @Bind(R.id.addWordButton) Button mAddWordButton;
     @Bind(R.id.inputStringEditText) EditText  mInputStringEditText;
+    public ArrayList<String> list = new ArrayList<String>();
 
     public String generateString() {
         Random random = new Random();
@@ -79,6 +81,12 @@ public class MainActivity extends AppCompatActivity {
 
                 //log inputs
                 Log.d(TAG, userInput);
+
+                list.add(userInput);
+
+                Log.d(TAG, list.toString());
+
+                mInputStringEditText.setText(null);
             }
         });
     }
