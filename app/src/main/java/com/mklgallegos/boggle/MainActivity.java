@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -25,6 +28,31 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.inputStringEditText) EditText  mInputStringEditText;
     @Bind(R.id.endRoundButton) Button mEndRoundButton;
     public ArrayList<String> list = new ArrayList<String>();
+
+    public boolean inDictionary(String word) {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(
+                    new InputStreamReader(getAssets().open("web2")));
+            String mLine;
+            while ((mLine = reader.readLine()) != null) {
+                if (mLine.indexOf(word) != -1) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            //log the exception
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    //log the exception
+                }
+            }
+        }
+        return false;
+    }
 
     public String generateString() {
         Random random = new Random();
@@ -80,32 +108,40 @@ public class MainActivity extends AppCompatActivity {
         mAddWordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //collect input from user
                 String userInput = mInputStringEditText.getText().toString();
                 String randomGeneratedString = mTestTextView.getText().toString();
 
                 char[] randomCharArray = randomGeneratedString.toCharArray();
-                char[] userInputCharArray = userInput.toCharArray();
+
 
                 String testString = new String();
 
+                Boolean test = inDictionary(userInput);
+                String test2 = test.toString();
+
                 //log inputs
                 Log.d(TAG, userInput);
+                Log.d(TAG, test2);
 
                 if (userInput.length() >= 3) {
 
-                    for (int i = 0; i < userInput.length(); i++ ) {
+                    if (inDictionary(userInput)) {
 
-                        boolean hasMatch = false;
+                        for (int i = 0; i < userInput.length(); i++ ) {
 
-                        for (int j = 0; j < randomCharArray.length; j++) {
+                            for (int j = 0; j < randomCharArray.length; j++) {
 
-                            if (userInput.charAt(i) == randomCharArray[j]) {
-                                testString += userInput.charAt(i);
-                                randomCharArray[j] = 0;
-                                break;
+                                if (userInput.charAt(i) == randomCharArray[j]) {
+                                    testString += userInput.charAt(i);
+                                    randomCharArray[j] = 0;
+                                    break;
+                                }
                             }
                         }
+                    } else {
+                        Toast.makeText(MainActivity.this, "That's not a word!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -121,14 +157,14 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if (isRepeat == false) {
                             list.add(userInput);
-                            Toast.makeText(MainActivity.this, "Good job :)", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Good job!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         list.add(userInput);
-                        Toast.makeText(MainActivity.this, "Good job :)", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Good job!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(MainActivity.this, "WORD NOT VALID", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "illegal word!", Toast.LENGTH_SHORT).show();
                 }
                 Log.d(TAG, list.toString());
                 mInputStringEditText.setText(null);
