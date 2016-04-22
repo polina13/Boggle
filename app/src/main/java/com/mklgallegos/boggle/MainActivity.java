@@ -1,5 +1,6 @@
 package com.mklgallegos.boggle;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.shuffleStringButton) Button mShuffleStringButton;
     @Bind(R.id.addWordButton) Button mAddWordButton;
     @Bind(R.id.inputStringEditText) EditText  mInputStringEditText;
+    @Bind(R.id.endRoundButton) Button mEndRoundButton;
     public ArrayList<String> list = new ArrayList<String>();
 
     public String generateString() {
@@ -130,6 +132,15 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.d(TAG, list.toString());
                 mInputStringEditText.setText(null);
+            }
+        });
+
+        mEndRoundButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+                intent.putExtra("list", list);
+                startActivity(intent);
             }
         });
     }

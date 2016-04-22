@@ -76,4 +76,12 @@
         android:id="@+id/addWordButton"
         android:layout_below="@+id/inputStringEditText"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End Round"
+        android:id="@+id/endRoundButton"
+        android:layout_below="@+id/addWordButton"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
