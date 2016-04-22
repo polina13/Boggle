@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mTestTextView.setText(shuffleString(generateString()));
+                list.clear();
             }
         });
 
@@ -78,14 +80,55 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //collect input from user
                 String userInput = mInputStringEditText.getText().toString();
+                String randomGeneratedString = mTestTextView.getText().toString();
+
+                char[] randomCharArray = randomGeneratedString.toCharArray();
+                char[] userInputCharArray = userInput.toCharArray();
+
+                String testString = new String();
 
                 //log inputs
                 Log.d(TAG, userInput);
 
-                list.add(userInput);
+                if (userInput.length() >= 3) {
 
+                    for (int i = 0; i < userInput.length(); i++ ) {
+
+                        boolean hasMatch = false;
+
+                        for (int j = 0; j < randomCharArray.length; j++) {
+
+                            if (userInput.charAt(i) == randomCharArray[j]) {
+                                testString += userInput.charAt(i);
+                                randomCharArray[j] = 0;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (testString.equals(userInput)) {
+                    if (list.size() > 0) {
+                        boolean isRepeat = false;
+                        for (int i = 0; i < list.size(); i++) {
+                            if (list.get(i).equals(userInput)) {
+                                Toast.makeText(MainActivity.this, "No Repeats!", Toast.LENGTH_SHORT).show();
+                                isRepeat = true;
+                                break;
+                            }
+                        }
+                        if (isRepeat == false) {
+                            list.add(userInput);
+                            Toast.makeText(MainActivity.this, "Good job :)", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        list.add(userInput);
+                        Toast.makeText(MainActivity.this, "Good job :)", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "WORD NOT VALID", Toast.LENGTH_SHORT).show();
+                }
                 Log.d(TAG, list.toString());
-
                 mInputStringEditText.setText(null);
             }
         });
