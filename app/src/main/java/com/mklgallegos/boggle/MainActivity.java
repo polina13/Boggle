@@ -122,8 +122,11 @@ public class MainActivity extends AppCompatActivity {
 
                 char[] randomCharArray = randomGeneratedString.toCharArray();
 
-
                 String testString = new String();
+
+                if (userInput.matches("")) {
+
+                }
 
 
                 if (userInput.length() >= 3) {
@@ -146,27 +149,32 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                if (testString.equals(userInput)) {
-                    if (list.size() > 0) {
-                        boolean isRepeat = false;
-                        for (int i = 0; i < list.size(); i++) {
-                            if (list.get(i).equals(userInput)) {
-                                Toast.makeText(MainActivity.this, "No Repeats!", Toast.LENGTH_SHORT).show();
-                                isRepeat = true;
-                                break;
+                if (!userInput.matches("")) {
+                    if (testString.equals(userInput)) {
+                        if (list.size() > 0) {
+                            boolean isRepeat = false;
+                            for (int i = 0; i < list.size(); i++) {
+                                if (list.get(i).equals(userInput)) {
+                                    Toast.makeText(MainActivity.this, "No Repeats!", Toast.LENGTH_SHORT).show();
+                                    isRepeat = true;
+                                    break;
+                                }
                             }
-                        }
-                        if (isRepeat == false) {
+                            if (isRepeat == false) {
+                                list.add(userInput);
+                                Toast.makeText(MainActivity.this, "Good job!", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
                             list.add(userInput);
                             Toast.makeText(MainActivity.this, "Good job!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        list.add(userInput);
-                        Toast.makeText(MainActivity.this, "Good job!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "illegal word!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(MainActivity.this, "illegal word!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "you must enter a word", Toast.LENGTH_SHORT).show();
                 }
+
                 Log.d(TAG, list.toString());
                 mInputStringEditText.setText(null);
             }
