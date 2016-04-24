@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 import butterknife.Bind;
@@ -28,17 +29,16 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.inputStringEditText) EditText  mInputStringEditText;
     @Bind(R.id.endRoundButton) Button mEndRoundButton;
     public ArrayList<String> list = new ArrayList<String>();
+    HashSet<String> dictionary = new HashSet<>();
 
-    public boolean inDictionary(String word) {
+    public void loadDictionary() {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(
                     new InputStreamReader(getAssets().open("web2")));
             String mLine;
             while ((mLine = reader.readLine()) != null) {
-                if (mLine.indexOf(word) != -1) {
-                    return true;
-                }
+                dictionary.add(mLine);
             }
         } catch (IOException e) {
             //log the exception
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        return false;
+
     }
 
     public String generateString() {
@@ -87,6 +87,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        loadDictionary();
+
+        Integer dictSize = dictionary.size();
+        String dictSizeString = dictSize.toString();
+
+        Log.d(TAG, dictSizeString);
+
 
         mTestTextView.setText(generateString());
 
@@ -118,16 +125,10 @@ public class MainActivity extends AppCompatActivity {
 
                 String testString = new String();
 
-                Boolean test = inDictionary(userInput);
-                String test2 = test.toString();
-
-                //log inputs
-                Log.d(TAG, userInput);
-                Log.d(TAG, test2);
 
                 if (userInput.length() >= 3) {
 
-                    if (inDictionary(userInput)) {
+                    if (dictionary.contains(userInput)) {
 
                         for (int i = 0; i < userInput.length(); i++ ) {
 
