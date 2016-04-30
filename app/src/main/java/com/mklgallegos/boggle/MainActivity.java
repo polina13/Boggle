@@ -20,7 +20,7 @@ import java.util.Random;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
     public static final String TAG = MainActivity.class.getSimpleName();
     @Bind(R.id.testTextView) TextView mTestTextView;
     @Bind(R.id.generateNewStringButton) Button mGenerateNewStringButton;
@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
     }
 
     public String generateString() {
@@ -88,6 +87,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         loadDictionary();
+        
+        mGenerateNewStringButton.setOnClickListener(this);
+        mShuffleStringButton.setOnClickListener(this);
+        mAddWordButton.setOnClickListener(this);
+        mEndRoundButton.setOnClickListener(this);
 
         Integer dictSize = dictionary.size();
         String dictSizeString = dictSize.toString();
@@ -97,96 +101,88 @@ public class MainActivity extends AppCompatActivity {
 
         mTestTextView.setText(generateString());
 
-        mGenerateNewStringButton.setOnClickListener(new View.OnClickListener() {
-            @Override
+
+
+        }
+
+        @Override
             public void onClick(View v) {
-                mTestTextView.setText(shuffleString(generateString()));
-                list.clear();
-            }
-        });
+            switch (v.getId()) {
+                case R.id.generateNewStringButton:
+                    mTestTextView.setText(shuffleString(generateString()));
+                    list.clear();
+                    break;
+                case R.id.shuffleStringButton:
+                    mTestTextView.setText(shuffleString(mTestTextView.getText().toString()));
+                    break;
+                case R.id.addWordButton:
+                    //collect input from user
+                    String userInput = mInputStringEditText.getText().toString();
+                    String randomGeneratedString = mTestTextView.getText().toString();
 
-        mShuffleStringButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTestTextView.setText(shuffleString(mTestTextView.getText().toString()));
-            }
-        });
+                    char[] randomCharArray = randomGeneratedString.toCharArray();
 
-        mAddWordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    String testString = new String();
 
-                //collect input from user
-                String userInput = mInputStringEditText.getText().toString();
-                String randomGeneratedString = mTestTextView.getText().toString();
+                    if (userInput.matches("")) {
 
-                char[] randomCharArray = randomGeneratedString.toCharArray();
-
-                String testString = new String();
-
-                if (userInput.matches("")) {
-
-                }
-
-
-                if (userInput.length() >= 3) {
-
-                    if (dictionary.contains(userInput)) {
-
-                        for (int i = 0; i < userInput.length(); i++ ) {
-
-                            for (int j = 0; j < randomCharArray.length; j++) {
-
-                                if (userInput.charAt(i) == randomCharArray[j]) {
-                                    testString += userInput.charAt(i);
-                                    randomCharArray[j] = 0;
-                                    break;
-                                }
-                            }
-                        }
-                    } else {
-                        Toast.makeText(MainActivity.this, "That's not a word!", Toast.LENGTH_SHORT).show();
                     }
-                }
 
-                if (!userInput.matches("")) {
-                    if (testString.equals(userInput)) {
-                        if (list.size() > 0) {
-                            boolean isRepeat = false;
-                            for (int i = 0; i < list.size(); i++) {
-                                if (list.get(i).equals(userInput)) {
-                                    Toast.makeText(MainActivity.this, "No Repeats!", Toast.LENGTH_SHORT).show();
-                                    isRepeat = true;
-                                    break;
+
+                    if (userInput.length() >= 3) {
+
+                        if (dictionary.contains(userInput)) {
+
+                            for (int i = 0; i < userInput.length(); i++ ) {
+
+                                for (int j = 0; j < randomCharArray.length; j++) {
+
+                                    if (userInput.charAt(i) == randomCharArray[j]) {
+                                        testString += userInput.charAt(i);
+                                        randomCharArray[j] = 0;
+                                        break;
+                                    }
                                 }
                             }
-                            if (isRepeat == false) {
+                        } else {
+                            Toast.makeText(MainActivity.this, "That's not a word!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    if (!userInput.matches("")) {
+                        if (testString.equals(userInput)) {
+                            if (list.size() > 0) {
+                                boolean isRepeat = false;
+                                for (int i = 0; i < list.size(); i++) {
+                                    if (list.get(i).equals(userInput)) {
+                                        Toast.makeText(MainActivity.this, "No Repeats!", Toast.LENGTH_SHORT).show();
+                                        isRepeat = true;
+                                        break;
+                                    }
+                                }
+                                if (isRepeat == false) {
+                                    list.add(userInput);
+                                    Toast.makeText(MainActivity.this, "Good job!", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
                                 list.add(userInput);
                                 Toast.makeText(MainActivity.this, "Good job!", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            list.add(userInput);
-                            Toast.makeText(MainActivity.this, "Good job!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "illegal word!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(MainActivity.this, "illegal word!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "you must enter a word", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(MainActivity.this, "you must enter a word", Toast.LENGTH_SHORT).show();
-                }
 
-                Log.d(TAG, list.toString());
-                mInputStringEditText.setText(null);
+                    Log.d(TAG, list.toString());
+                    mInputStringEditText.setText(null);
+                    break;
+                case R.id.endRoundButton:
+                    Intent intent = new Intent(MainActivity.this, ResultActivity.class);
+                    intent.putExtra("list", list);
+                    startActivity(intent);
+                    break;
             }
-        });
-
-        mEndRoundButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ResultActivity.class);
-                intent.putExtra("list", list);
-                startActivity(intent);
-            }
-        });
+        }
     }
-}
