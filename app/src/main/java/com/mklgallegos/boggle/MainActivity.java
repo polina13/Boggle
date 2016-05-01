@@ -20,7 +20,7 @@ import java.util.Random;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String TAG = MainActivity.class.getSimpleName();
     @Bind(R.id.testTextView) TextView mTestTextView;
     @Bind(R.id.generateNewStringButton) Button mGenerateNewStringButton;
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         loadDictionary();
-        
+
         mGenerateNewStringButton.setOnClickListener(this);
         mShuffleStringButton.setOnClickListener(this);
         mAddWordButton.setOnClickListener(this);
