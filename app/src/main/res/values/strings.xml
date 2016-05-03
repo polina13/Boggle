@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Boggle</string>
-    <string name="testString">This is a test</string>
+    <string name="login">login</string>
+    <string name="play">play</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
+
 </resources>

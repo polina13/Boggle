@@ -22,7 +22,7 @@ public class ResultActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        //retrieve the extras sent with the intent from MainActivity
+        //retrieve the extras sent with the intent from Activity
         ArrayList<String> list = intent.getStringArrayListExtra("list");
 
         String[] listArr = new String[list.size()];
