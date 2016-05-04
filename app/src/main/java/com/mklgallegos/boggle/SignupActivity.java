@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.mklgallegos.boggle.models.User;
 
 
 import java.util.Map;
@@ -71,6 +72,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         mFirebaseRef.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
             @Override
             public void onSuccess(Map<String, Object> result) {
+                String uid = result.get("uid").toString();
+                createUserInFirebaseHelper(firstName, lastName, email, uid);
             }
 
             @Override
@@ -78,5 +81,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 Log.d(TAG, "error occurred " + firebaseError);
             }
         });
+    }
+
+    private void createUserInFirebaseHelper(final String firstName, final String lastName, final String email, final String uid) {
+        final Firebase userLocation = new Firebase(Constants.FIREBASE_URL_USERS).child(uid);
+        User newUser = new User(firstName, lastName, email);
+        userLocation.setValue(newUser);
     }
 }
