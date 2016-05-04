@@ -62,7 +62,7 @@
         android:theme="@style/AppTheme"
         android:hint="@string/first_name"
         android:inputType="text"
-        android:width="150dp"
+        android:width="225dp"
         android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp" />
@@ -76,7 +76,7 @@
         android:theme="@style/AppTheme"
         android:hint="@string/last_name"
         android:inputType="text"
-        android:width="150dp"
+        android:width="225dp"
         android:layout_below="@+id/firstNamEditText"
         android:layout_alignLeft="@+id/firstNamEditText"
         android:layout_alignStart="@+id/firstNamEditText" />
@@ -90,7 +90,7 @@
         android:theme="@style/AppTheme"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:width="150dp"
+        android:width="225dp"
         android:layout_below="@+id/lastNameEditText"
         android:layout_alignLeft="@+id/lastNameEditText"
         android:layout_alignStart="@+id/lastNameEditText" />
@@ -104,7 +104,7 @@
         android:theme="@style/AppTheme"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:width="150dp"
+        android:width="225dp"
         android:layout_below="@+id/emailEditText"
         android:layout_alignLeft="@+id/emailEditText"
         android:layout_alignStart="@+id/emailEditText" />

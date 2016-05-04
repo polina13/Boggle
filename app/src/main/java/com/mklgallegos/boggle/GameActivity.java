@@ -116,7 +116,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     mTestTextView.setText(shuffleString(mTestTextView.getText().toString()));
                     break;
                 case R.id.addWordButton:
-                    //collect input from user
+                    //collect input
                     String userInput = mInputStringEditText.getText().toString();
                     String randomGeneratedString = mTestTextView.getText().toString();
 
