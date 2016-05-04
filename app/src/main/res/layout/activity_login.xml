@@ -20,7 +20,8 @@
         android:textSize="80sp"
         android:layout_above="@+id/usernameEditText"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="54dp" />
+        android:layout_marginBottom="54dp"
+        android:textStyle="bold" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -28,7 +29,7 @@
         android:id="@+id/usernameEditText"
         android:width="200sp"
         android:textColor="@color/white"
-        android:hint="@string/username"
+        android:hint="@string/email"
         android:textColorHint="@color/white"
         android:theme="@style/AppTheme"
         android:inputType="text"
@@ -67,7 +68,7 @@
         android:layout_height="wrap_content"
         android:text="@string/sign_up"
         android:textColor="@color/white"
-        android:id="@+id/textView5"
+        android:id="@+id/signUpTextView"
         android:layout_marginTop="22dp"
         android:textStyle="bold"
         android:layout_below="@+id/loginButton"

@@ -18,15 +18,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
 
-
-
-        mLoginTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
+        mLoginTextView.setOnClickListener(this);
     }
 
     @Override
