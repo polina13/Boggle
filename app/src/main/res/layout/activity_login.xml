@@ -18,15 +18,15 @@
         android:text="@string/app_name"
         android:id="@+id/textView4"
         android:textSize="80sp"
-        android:layout_above="@+id/usernameEditText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="54dp"
-        android:textStyle="bold" />
+        android:layout_marginBottom="50dp"
+        android:textStyle="bold"
+        android:layout_above="@+id/emailEditText"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/usernameEditText"
+        android:id="@+id/emailEditText"
         android:width="200sp"
         android:textColor="@color/white"
         android:hint="@string/email"

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -74,6 +75,12 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             public void onSuccess(Map<String, Object> result) {
                 String uid = result.get("uid").toString();
                 createUserInFirebaseHelper(firstName, lastName, email, uid);
+                Toast.makeText(SignupActivity.this, "Account Creation Successful", Toast.LENGTH_SHORT).show();
+
+                //transition to LoginActivity once user has created an account
+                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
 
             @Override
