@@ -1,6 +1,7 @@
 package com.mklgallegos.boggle;
 
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.addWordButton) Button mAddWordButton;
     @Bind(R.id.inputStringEditText) EditText  mInputStringEditText;
     @Bind(R.id.endRoundButton) Button mEndRoundButton;
+    @Bind(R.id.timerTextView) TextView mTimerTextView;
     public ArrayList<String> list = new ArrayList<String>();
     HashSet<String> dictionary = new HashSet<>();
 
@@ -101,9 +103,35 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         mTestTextView.setText(generateString());
 
+        new CountDownTimer(180000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                if (millisUntilFinished < 180000 && millisUntilFinished >= 130000 ) {
+                    mTimerTextView.setText("02:" + ((millisUntilFinished / 1000) - 120));
+                } else if (millisUntilFinished < 130000 && millisUntilFinished >= 120000) {
+                    mTimerTextView.setText("02:" + "0" + ((millisUntilFinished / 1000) - 120));
+                } else if (millisUntilFinished < 120000 && millisUntilFinished >= 70000) {
+                    mTimerTextView.setText("01:" + ((millisUntilFinished / 1000) - 60));
+                } else if (millisUntilFinished < 70000 && millisUntilFinished >= 60000) {
+                    mTimerTextView.setText("01:" + "0" + ((millisUntilFinished / 1000) - 60));
+                } else if (millisUntilFinished < 60000 && millisUntilFinished >=10000) {
+                    mTimerTextView.setText("00:" + (millisUntilFinished / 1000));
+                } else if (millisUntilFinished < 10000) {
+                    mTimerTextView.setText("00:" + "0" + (millisUntilFinished / 1000));
+                }
+            }
+
+            public void onFinish() {
+                mTimerTextView.setText("done!");
+                Intent intent = new Intent(GameActivity.this, ResultActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra("list", list);
+                startActivity(intent);
+                finish();
+            }
+        }.start();
+    }
 
 
-        }
 
         @Override
             public void onClick(View v) {
