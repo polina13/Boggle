@@ -36,18 +36,13 @@
         android:layout_below="@+id/textView4"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login"
-        android:id="@+id/loginButton"
-        android:width="125dp"
-        android:background="@color/white"
-        android:textStyle="bold"
-        android:layout_marginTop="32dp"
-        android:layout_below="@+id/playButton"
-        android:layout_alignLeft="@+id/playButton"
-        android:layout_alignStart="@+id/playButton" />
+        android:text="Hello World!"
+        android:id="@+id/greetingTextView"
+        android:textColor="@color/white"
+        android:layout_alignTop="@+id/textView4"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

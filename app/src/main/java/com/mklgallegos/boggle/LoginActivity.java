@@ -1,9 +1,13 @@
 package com.mklgallegos.boggle;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +25,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public static final String TAG = LoginActivity.class.getSimpleName();
 
+
+    //Firebase
     private Firebase mFirebaseRef;
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mSharedPreferencesEditor;
+
+    private ProgressDialog mAuthProgressDialog;
 
     @Bind(R.id.signUpTextView) TextView mSignUpTextView;
 
@@ -40,11 +50,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+        mSharedPreferencesEditor = mSharedPreferences.edit();
+
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
 
         mSignUpTextView.setOnClickListener(this);
         mLoginButton.setOnClickListener(this);
+
+        //auth progress dialog
+        mAuthProgressDialog = new ProgressDialog(this);
+        mAuthProgressDialog.setTitle("loading...");
+        mAuthProgressDialog.setMessage("Authentication in progress...");
+        mAuthProgressDialog.setCancelable(false);
+
+
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -72,13 +95,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mPasswordEditText.setError("Password cannot be blank");
         }
 
+        mAuthProgressDialog.show();
+
         mFirebaseRef.authWithPassword(email, password, new Firebase.AuthResultHandler() {
 
             @Override
             public void onAuthenticated(AuthData authData) {
+                mAuthProgressDialog.dismiss();
                 if (authData != null) {
                     String userInfo = authData.toString();
                     Log.d(TAG, "Currently logged in: " + userInfo);
+
+                    String userUid = authData.getUid();
+                    mSharedPreferencesEditor.putString(Constants.KEY_UID, userUid).apply();
+
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
@@ -88,6 +118,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
+                mAuthProgressDialog.dismiss();
                 switch (firebaseError.getCode()) {
                     case FirebaseError.INVALID_EMAIL:
                     case FirebaseError.USER_DOES_NOT_EXIST:
@@ -106,6 +137,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         });
     }
+
+
 
     private void showErrorToast(String message) {
         Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();

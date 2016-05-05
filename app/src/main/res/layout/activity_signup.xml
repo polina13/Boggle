@@ -49,9 +49,9 @@
         android:text="@string/already_have_account"
         android:textColor="@color/white"
         android:id="@+id/loginTextView"
-        android:layout_below="@+id/passwordEditText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp" />
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -108,4 +108,18 @@
         android:layout_below="@+id/emailEditText"
         android:layout_alignLeft="@+id/emailEditText"
         android:layout_alignStart="@+id/emailEditText" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/confirmPasswordEditText"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:theme="@style/AppTheme"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        android:width="225dp"
+        android:layout_below="@+id/passwordEditText"
+        android:layout_alignLeft="@+id/passwordEditText"
+        android:layout_alignStart="@+id/passwordEditText" />
 </RelativeLayout>

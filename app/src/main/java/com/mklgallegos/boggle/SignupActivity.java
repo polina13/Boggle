@@ -1,6 +1,8 @@
 package com.mklgallegos.boggle;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,10 +34,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     @Bind(R.id.lastNameEditText) EditText mLastNameEditText;
     @Bind(R.id.emailEditText) EditText mEmailEditText;
     @Bind(R.id.passwordEditText) EditText mPasswordEditText;
+    @Bind(R.id.confirmPasswordEditText) EditText mConfirmPasswordEditText;
 
     //Buttons
     @Bind(R.id.createNewAccountbutton) Button mCreateNewAccountButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,14 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         final String lastName = mLastNameEditText.getText().toString();
         final String email = mEmailEditText.getText().toString();
         final String password = mPasswordEditText.getText().toString();
+        final String confirmPassword = mConfirmPasswordEditText.getText().toString();
+
+        boolean validEmail = isValidEmail(email);
+        boolean validLastName = isValidFirstName(firstName);
+        boolean validFirstName = isValidLastName(lastName);
+        boolean validPassword = isValidPassword(password, confirmPassword);
+
+        if (!validEmail || !validFirstName || !validLastName || !validPassword) return;
 
         mFirebaseRef.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
             @Override
@@ -94,5 +104,58 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         final Firebase userLocation = new Firebase(Constants.FIREBASE_URL_USERS).child(uid);
         User newUser = new User(firstName, lastName, email);
         userLocation.setValue(newUser);
+    }
+
+    private boolean isValidEmail(String email) {
+        boolean isGoodEmail =
+                (email != null && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches());
+        if (!isGoodEmail) {
+
+            Drawable d = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_error_outline_white_18dp, null);
+            d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+
+            mEmailEditText.setError("Please enter a valid email address", d);
+            return false;
+        }
+        return isGoodEmail;
+    }
+
+    private boolean isValidFirstName(String name) {
+        if (name.equals("")) {
+
+            Drawable d = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_error_outline_white_18dp, null);
+
+            d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+            mFirstNameEditText.setError("Please enter your first name", d);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isValidLastName(String name) {
+        if (name.equals("")) {
+            Drawable d = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_error_outline_white_18dp, null);
+            d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+            mLastNameEditText.setError("Please enter your last name", d);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isValidPassword(String password, String confirmPassword) {
+        if (password.equals("")) {
+            Drawable d = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_error_outline_white_18dp, null);
+            d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+            mPasswordEditText.setError("Password cannot be blank", d);
+            return false;
+        }
+
+        if (!(password.equals(confirmPassword))) {
+            Drawable d = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_error_outline_white_18dp, null);
+            d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+            mConfirmPasswordEditText.setError("Passwords do not match", d);
+            return false;
+        }
+        return true;
     }
 }
