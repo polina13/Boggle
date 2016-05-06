@@ -1,7 +1,9 @@
 package com.mklgallegos.boggle;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.firebase.client.Firebase;
+import com.mklgallegos.boggle.models.Game;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,6 +37,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.timerTextView) TextView mTimerTextView;
     public ArrayList<String> list = new ArrayList<String>();
     HashSet<String> dictionary = new HashSet<>();
+
+    Game mGame = new Game();
+
+    private SharedPreferences mSharedPreferences;
 
     public void loadDictionary() {
         BufferedReader reader = null;
@@ -89,6 +98,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_game);
         ButterKnife.bind(this);
         loadDictionary();
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(GameActivity.this);
 
         mGenerateNewStringButton.setOnClickListener(this);
         mShuffleStringButton.setOnClickListener(this);
@@ -207,6 +218,18 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     mInputStringEditText.setText(null);
                     break;
                 case R.id.endRoundButton:
+
+                    String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
+                    Firebase userGamesFirebaseRef = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid);
+                    Firebase pushRef = userGamesFirebaseRef.push();
+                    String gamePushId = pushRef.getKey();
+                    mGame.setList(list);
+
+                    mGame.setPushId(gamePushId);
+
+                    pushRef.setValue(mGame);
+
+
                     Intent intent = new Intent(GameActivity.this, ResultActivity.class);
                     intent.putExtra("list", list);
                     startActivity(intent);
