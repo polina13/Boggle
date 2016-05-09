@@ -154,7 +154,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             public void onFinish() {
                 mTimerTextView.setText("done!");
-                
+
                 Date date = new Date();
 
                 String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);

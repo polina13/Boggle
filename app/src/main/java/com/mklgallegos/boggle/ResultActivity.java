@@ -12,14 +12,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.mklgallegos.boggle.models.Game;
 import com.mklgallegos.boggle.models.User;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,11 +29,16 @@ import butterknife.ButterKnife;
 public class ResultActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String TAG = ResultActivity.class.getSimpleName();
 
+    private ArrayList<String> list;
+    private String[] listArr;
+    private ArrayAdapter adapter;
+
     private ValueEventListener mUserRefListener;
     private Firebase mUserRef;
     private String mUId;
     private SharedPreferences mSharedPreferences;
     private Firebase mFirebaseRef;
+    private Firebase mGameLocationRef;
     @Bind(R.id.playerNameTextView) TextView mPlayerNameTextView;
     @Bind(R.id.timestampValueTextView) TextView mTimestampValueTextView;
     @Bind(R.id.totalPointsValueTextView) TextView mTotalPointsValueTextView;
@@ -45,64 +52,67 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_result);
         ButterKnife.bind(this);
 
+        mPlayAgainButton.setOnClickListener(this);
+
+
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
+
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUId = mSharedPreferences.getString(Constants.KEY_UID, null);
         mUserRef = new Firebase(Constants.FIREBASE_URL_USERS).child(mUId);
 
-        Date date = new Date();
-        String dateString = date.toString();
-        mTimestampValueTextView.setText(dateString);
-
-        mPlayAgainButton.setOnClickListener(this);
 
 
+        mGameLocationRef = new Firebase(Constants.FIREBASE_URL_GAMES + "/" + mUId);
 
-            mUserRefListener = mUserRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    User user = dataSnapshot.getValue(User.class);
-                    mPlayerNameTextView.setText(user.getFirstName());
-                }
+        mGameLocationRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
+                Game game = snapshot.getValue(Game.class);
 
-                @Override
-                public void onCancelled(FirebaseError firebaseError) {
-                    Log.d(TAG, "Read failed");
-                }
-            });
+                mTotalPointsValueTextView.setText(game.getTotalPoints().toString());
+                mTimestampValueTextView.setText(game.getDate().toString());
 
-        Intent intent = getIntent();
+                list = game.getList();
+                listArr = new String[list.size()];
+                listArr = list.toArray(listArr);
+                ArrayAdapter adapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_expandable_list_item_1, listArr);
+                mListView.setAdapter(adapter);
 
-        //retrieve the extras sent with the intent from Activity
-        ArrayList<String> list = intent.getStringArrayListExtra("list");
-
-        Integer totalScore = 0;
-
-        for (String word : list) {
-            if (word.length() == 3 || word.length() == 4) {
-                totalScore += 1;
-            } else if (word.length() == 5) {
-                totalScore += 2;
-            } else if (word.length() == 6) {
-                totalScore += 3;
-            } else if (word.length() == 7) {
-                totalScore += 5;
-            } else if (word.length() >= 8) {
-                totalScore += 11;
             }
-            Log.d(TAG, word);
-        }
+
+            @Override
+            public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot snapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot snapshot, String string) {
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
 
-        Log.d(TAG, totalScore.toString());
+        mUserRefListener = mUserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                mPlayerNameTextView.setText(user.getFirstName());
+            }
 
-        mTotalPointsValueTextView.setText(totalScore.toString());
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d(TAG, "Read failed");
+            }
+        });
 
-        String[] listArr = new String[list.size()];
-        listArr = list.toArray(listArr);
-
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, listArr);
-        mListView.setAdapter(adapter);
 
     }
 
