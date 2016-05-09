@@ -10,9 +10,119 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mklgallegos.boggle.ResultActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Results"
+        android:id="@+id/resultsTextView"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:layout_marginTop="39dp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Player:"
+        android:id="@+id/playerTextView"
+        android:textColor="@color/white"
+        android:layout_marginTop="32dp"
+        android:textSize="18sp"
+        android:layout_below="@+id/resultsTextView"
+        android:layout_toLeftOf="@+id/playerNameTextView"
+        android:layout_toStartOf="@+id/playerNameTextView"
+        android:layout_marginRight="26dp"
+        android:layout_marginEnd="26dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Played:"
+        android:id="@+id/timestampTextView"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_below="@+id/playerTextView"
+        android:layout_alignRight="@+id/playerTextView"
+        android:layout_alignEnd="@+id/playerTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Points:"
+        android:id="@+id/totalPointsTextView"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_below="@+id/timestampTextView"
+        android:layout_alignLeft="@+id/timestampTextView"
+        android:layout_alignStart="@+id/timestampTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name_here"
+        android:id="@+id/playerNameTextView"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_alignTop="@+id/playerTextView"
+        android:layout_alignLeft="@+id/timestampValueTextView"
+        android:layout_alignStart="@+id/timestampValueTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="timestamp_here"
+        android:id="@+id/timestampValueTextView"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_above="@+id/totalPointsTextView"
+        android:layout_alignLeft="@+id/resultsTextView"
+        android:layout_alignStart="@+id/resultsTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="points_here"
+        android:id="@+id/totalPointsValueTextView"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_alignBottom="@+id/totalPointsTextView"
+        android:layout_alignLeft="@+id/timestampValueTextView"
+        android:layout_alignStart="@+id/timestampValueTextView" />
+
     <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_marginBottom="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Words"
+        android:id="@+id/textView"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_below="@+id/totalPointsValueTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"></ListView>
+        android:text="Play Again?"
+        android:id="@+id/playAgainButton"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

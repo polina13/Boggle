@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -92,6 +93,26 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         return new String(charArray);
     }
 
+    public Integer countPoints(ArrayList<String> list) {
+
+        Integer totalScore = 0;
+
+        for (String word : list) {
+            if (word.length() == 3 || word.length() == 4) {
+                totalScore += 1;
+            } else if (word.length() == 5) {
+                totalScore += 2;
+            } else if (word.length() == 6) {
+                totalScore += 3;
+            } else if (word.length() == 7) {
+                totalScore += 5;
+            } else if (word.length() >= 8) {
+                totalScore += 11;
+            }
+        }
+        return totalScore;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +154,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             public void onFinish() {
                 mTimerTextView.setText("done!");
+                
+                Date date = new Date();
+
+                String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
+                Firebase userGamesFirebaseRef = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid);
+                Firebase pushRef = userGamesFirebaseRef.push();
+                String gamePushId = pushRef.getKey();
+                mGame.setList(list);
+                mGame.setDate(date);
+                mGame.setTotalPoints(countPoints(list));
+                mGame.setPushId(gamePushId);
+                pushRef.setValue(mGame);
+
                 Intent intent = new Intent(GameActivity.this, ResultActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.putExtra("list", list);
@@ -219,11 +253,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 case R.id.endRoundButton:
 
+                    Date date = new Date();
+
                     String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
                     Firebase userGamesFirebaseRef = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid);
                     Firebase pushRef = userGamesFirebaseRef.push();
                     String gamePushId = pushRef.getKey();
                     mGame.setList(list);
+                    mGame.setDate(date);
+                    mGame.setTotalPoints(countPoints(list));
 
                     mGame.setPushId(gamePushId);
 
