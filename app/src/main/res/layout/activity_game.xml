@@ -25,6 +25,8 @@
         android:layout_height="wrap_content"
         android:text="Generate New String"
         android:id="@+id/generateNewStringButton"
+        android:background="@color/white"
+        android:textColor="@color/black"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
@@ -33,6 +35,8 @@
         android:layout_height="wrap_content"
         android:text="Shuffle String"
         android:id="@+id/shuffleStringButton"
+        android:background="@color/white"
+        android:textColor="@color/black"
         android:width="40dp"
         android:layout_below="@+id/testTextView"
         android:layout_centerHorizontal="true"
@@ -47,6 +51,8 @@
         android:hint="enter a word"
         android:width="200sp"
         android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp" />
@@ -58,6 +64,7 @@
         android:id="@+id/textView2"
         android:width="250dp"
         android:textSize="20sp"
+        android:textColor="@color/white"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
@@ -66,6 +73,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Word"
+        android:background="@color/white"
+        android:textColor="@color/black"
         android:id="@+id/addWordButton"
         android:layout_below="@+id/inputStringEditText"
         android:layout_centerHorizontal="true" />
@@ -75,6 +84,8 @@
         android:layout_height="wrap_content"
         android:text="End Round"
         android:id="@+id/endRoundButton"
+        android:background="@color/white"
+        android:textColor="@color/black"
         android:layout_below="@+id/addWordButton"
         android:layout_centerHorizontal="true" />
 
