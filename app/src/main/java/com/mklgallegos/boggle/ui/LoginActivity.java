@@ -3,7 +3,9 @@ package com.mklgallegos.boggle.ui;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -90,11 +92,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String password = mPasswordEditText.getText().toString();
 
         if (email.equals("")) {
-            mEmailEditText.setError("Please enter your email");
+            Drawable d = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_error_outline_white_18dp, null);
+            d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+            mEmailEditText.setError("Please enter your email", d);
         }
 
         if (password.equals("")) {
-            mPasswordEditText.setError("Password cannot be blank");
+            Drawable d = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_error_outline_white_18dp, null);
+            d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+            mPasswordEditText.setError("Password cannot be blank", d);
         }
 
         mAuthProgressDialog.show();
@@ -120,14 +126,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
+
+                Drawable d = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_error_outline_white_18dp, null);
+                d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+
                 mAuthProgressDialog.dismiss();
                 switch (firebaseError.getCode()) {
                     case FirebaseError.INVALID_EMAIL:
+                        mEmailEditText.setError("Invalid Email", d);
                     case FirebaseError.USER_DOES_NOT_EXIST:
-                        mEmailEditText.setError("Please check that you entered your email correctly");
+                        mEmailEditText.setError("Please check that you entered your email correctly", d);
                         break;
                     case FirebaseError.INVALID_PASSWORD:
-                        mEmailEditText.setError(firebaseError.getMessage());
+                        mEmailEditText.setError(firebaseError.getMessage(), d);
                         break;
                     case FirebaseError.NETWORK_ERROR:
                         showErrorToast("There was a problem with the network connection");
