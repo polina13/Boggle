@@ -26,7 +26,8 @@
         </activity>
         <activity android:name=".ui.SignupActivity" />
         <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.AccountActivity"></activity>
+        <activity android:name=".ui.AccountActivity" />
+        <activity android:name=".ui.ChangeEmailActivity"></activity>
     </application>
 
 </manifest>
