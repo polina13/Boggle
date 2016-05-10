@@ -1,4 +1,4 @@
-package com.mklgallegos.boggle;
+package com.mklgallegos.boggle.ui;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.mklgallegos.boggle.Constants;
+import com.mklgallegos.boggle.R;
 import com.mklgallegos.boggle.models.User;
 
 

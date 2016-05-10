@@ -1,4 +1,4 @@
-package com.mklgallegos.boggle;
+package com.mklgallegos.boggle.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +17,8 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.mklgallegos.boggle.Constants;
+import com.mklgallegos.boggle.R;
 import com.mklgallegos.boggle.models.Game;
 import com.mklgallegos.boggle.models.User;
 

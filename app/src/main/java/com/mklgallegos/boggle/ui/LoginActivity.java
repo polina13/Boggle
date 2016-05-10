@@ -1,4 +1,4 @@
-package com.mklgallegos.boggle;
+package com.mklgallegos.boggle.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.mklgallegos.boggle.Constants;
+import com.mklgallegos.boggle.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
