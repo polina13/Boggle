@@ -1,5 +1,6 @@
 package com.mklgallegos.boggle.ui;
 
+import android.accounts.Account;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -72,7 +73,7 @@ public class ChangeEmailActivity extends AppCompatActivity implements View.OnCli
                 mFirebaseRef.changeEmail(oldEmail, password, newEmail, new Firebase.ResultHandler() {
                     @Override
                     public void onSuccess() {
-                        
+
                         final Firebase firebaseUserRef = new Firebase(Constants.FIREBASE_URL_USERS);
 
                         Query findOldEmail = firebaseUserRef.orderByChild("email").equalTo(oldEmail);
@@ -83,6 +84,10 @@ public class ChangeEmailActivity extends AppCompatActivity implements View.OnCli
                                 String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
                                 Firebase specificUserRef = new Firebase(Constants.FIREBASE_URL_USERS + "/" + userUid);
                                 specificUserRef.child("email").setValue(newEmail);
+
+                                Intent intent = new Intent(ChangeEmailActivity.this, AccountActivity.class);
+                                startActivity(intent);
+                                finish();
                             }
 
                             @Override

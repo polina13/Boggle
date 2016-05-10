@@ -25,10 +25,105 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Email Address"
-        android:id="@+id/changeEmailButton"
+        android:text="@string/update_email"
+        android:id="@+id/updateEmailButton"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:width="175sp"
+        android:layout_marginBottom="6dp"
+        android:layout_above="@+id/updatePasswordButton"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update_password"
+        android:id="@+id/updatePasswordButton"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:width="175sp"
+        android:layout_marginBottom="6dp"
+        android:layout_above="@+id/deleteAccountButton"
+        android:layout_alignLeft="@+id/updateEmailButton"
+        android:layout_alignStart="@+id/updateEmailButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete_account"
+        android:id="@+id/deleteAccountButton"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:width="175sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/updatePasswordButton"
+        android:layout_alignStart="@+id/updatePasswordButton"
+        android:layout_marginBottom="52dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/first_name"
+        android:textColor="@color/white"
+        android:id="@+id/firstNameTextView"
+        android:textSize="25dp"
         android:layout_below="@+id/textView5"
         android:layout_alignLeft="@+id/textView5"
-        android:layout_alignStart="@+id/textView5"
-        android:layout_marginTop="29dp" />
+        android:layout_alignStart="@+id/textView5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/last_name"
+        android:id="@+id/lastNameTextView"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:layout_below="@+id/textView6"
+        android:layout_toRightOf="@+id/textView6"
+        android:layout_toEndOf="@+id/textView6" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/email"
+        android:id="@+id/emailTextView"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:layout_below="@+id/textView7"
+        android:layout_toRightOf="@+id/textView6"
+        android:layout_toEndOf="@+id/textView6" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="F"
+        android:id="@+id/textView6"
+        android:layout_alignBaseline="@+id/firstNameTextView"
+        android:layout_alignBottom="@+id/firstNameTextView"
+        android:layout_toLeftOf="@+id/firstNameTextView"
+        android:layout_toStartOf="@+id/firstNameTextView"
+        android:layout_marginRight="12dp"
+        android:layout_marginEnd="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="L"
+        android:id="@+id/textView7"
+        android:layout_alignBaseline="@+id/lastNameTextView"
+        android:layout_alignBottom="@+id/lastNameTextView"
+        android:layout_alignLeft="@+id/textView6"
+        android:layout_alignStart="@+id/textView6" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="E"
+        android:id="@+id/textView8"
+        android:layout_alignBaseline="@+id/emailTextView"
+        android:layout_alignBottom="@+id/emailTextView"
+        android:layout_alignLeft="@+id/textView7"
+        android:layout_alignStart="@+id/textView7" />
+
+
 </RelativeLayout>

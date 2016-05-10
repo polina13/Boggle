@@ -19,9 +19,8 @@
         android:width="225sp"
         android:theme="@style/AppTheme"
         android:textColorHint="@color/white"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="76dp" />
+        android:layout_above="@+id/passwordEditText"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -32,7 +31,7 @@
         android:inputType="textPassword"
         android:theme="@style/AppTheme"
         android:textColorHint="@color/white"
-        android:layout_below="@+id/oldEmailEditText"
+        android:layout_above="@+id/newEmailEditText"
         android:layout_alignLeft="@+id/oldEmailEditText"
         android:layout_alignStart="@+id/oldEmailEditText" />
 
@@ -45,16 +44,21 @@
         android:hint="new email address"
         android:width="225sp"
         android:textColorHint="@color/white"
-        android:layout_below="@+id/passwordEditText"
+        android:layout_above="@+id/updateEmailButton"
         android:layout_alignLeft="@+id/passwordEditText"
-        android:layout_alignStart="@+id/passwordEditText" />
+        android:layout_alignStart="@+id/passwordEditText"
+        android:layout_marginBottom="36dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Update Email"
+        android:background="@color/white"
+        android:textColor="@color/black"
         android:id="@+id/updateEmailButton"
-        android:layout_below="@+id/newEmailEditText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="83dp" />
+        android:width="225sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/newEmailEditText"
+        android:layout_alignStart="@+id/newEmailEditText"
+        android:layout_marginBottom="60dp" />
 </RelativeLayout>

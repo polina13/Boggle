@@ -10,4 +10,7 @@
     <string name="create_account">Create an Account</string>
     <string name="already_have_account">Already have an account? Login</string>
     <string name="confirm_password">confirm password</string>
+    <string name="update_email">update email</string>
+    <string name="update_password">update password</string>
+    <string name="delete_account">delete account</string>
 </resources>
