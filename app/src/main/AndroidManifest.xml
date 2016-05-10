@@ -27,7 +27,9 @@
         <activity android:name=".ui.SignupActivity" />
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.AccountActivity" />
-        <activity android:name=".ui.ChangeEmailActivity"></activity>
+        <activity
+            android:name=".ui.ChangeEmailActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>

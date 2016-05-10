@@ -27,4 +27,7 @@ public class User {
     public String getEmail(){
         return email;
     }
+
+    //setter methods
+    public void setEmail(String email) {this.email = email;}
 }
