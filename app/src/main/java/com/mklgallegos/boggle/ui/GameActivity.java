@@ -100,7 +100,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Integer totalScore = 0;
 
         for (String word : list) {
-            if (word.length() == 3 || word.length() == 4) {
+            if (word.equals("no words guessed")) {
+                totalScore+=0;
+            } else if (word.length() == 3 || word.length() == 4) {
                 totalScore += 1;
             } else if (word.length() == 5) {
                 totalScore += 2;
@@ -261,13 +263,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     Firebase userGamesFirebaseRef = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid);
                     Firebase pushRef = userGamesFirebaseRef.push();
                     String gamePushId = pushRef.getKey();
+
+                    if (list.isEmpty()) {
+                        list.add("no words guessed");
+                    }
+
                     mGame.setList(list);
+
                     mGame.setDate(date);
                     mGame.setTotalPoints(countPoints(list));
 
                     mGame.setPushId(gamePushId);
 
                     pushRef.setValue(mGame);
+
+                    Log.d(TAG, list.toString());
 
 
                     Intent intent = new Intent(GameActivity.this, ResultActivity.class);
