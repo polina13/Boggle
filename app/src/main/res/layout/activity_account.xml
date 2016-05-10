@@ -67,9 +67,9 @@
         android:textColor="@color/white"
         android:id="@+id/firstNameTextView"
         android:textSize="25dp"
+        android:layout_marginTop="42dp"
         android:layout_below="@+id/textView5"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_alignStart="@+id/textView5" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -78,9 +78,9 @@
         android:id="@+id/lastNameTextView"
         android:textColor="@color/white"
         android:textSize="25dp"
-        android:layout_below="@+id/textView6"
-        android:layout_toRightOf="@+id/textView6"
-        android:layout_toEndOf="@+id/textView6" />
+        android:layout_below="@+id/firstNameTextView"
+        android:layout_alignLeft="@+id/firstNameTextView"
+        android:layout_alignStart="@+id/firstNameTextView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -90,25 +90,22 @@
         android:textColor="@color/white"
         android:textSize="25dp"
         android:layout_below="@+id/textView7"
-        android:layout_toRightOf="@+id/textView6"
-        android:layout_toEndOf="@+id/textView6" />
+        android:layout_alignLeft="@+id/lastNameTextView"
+        android:layout_alignStart="@+id/lastNameTextView" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="F"
+        android:text="FIRST NAME"
         android:id="@+id/textView6"
-        android:layout_alignBaseline="@+id/firstNameTextView"
         android:layout_alignBottom="@+id/firstNameTextView"
-        android:layout_toLeftOf="@+id/firstNameTextView"
-        android:layout_toStartOf="@+id/firstNameTextView"
-        android:layout_marginRight="12dp"
-        android:layout_marginEnd="12dp" />
+        android:layout_alignLeft="@+id/textView5"
+        android:layout_alignStart="@+id/textView5" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="L"
+        android:text="LAST NAME"
         android:id="@+id/textView7"
         android:layout_alignBaseline="@+id/lastNameTextView"
         android:layout_alignBottom="@+id/lastNameTextView"
@@ -118,7 +115,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="E"
+        android:text="EMAIL"
         android:id="@+id/textView8"
         android:layout_alignBaseline="@+id/emailTextView"
         android:layout_alignBottom="@+id/emailTextView"
