@@ -10,12 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.mklgallegos.boggle.Constants;
 import com.mklgallegos.boggle.R;
+import com.mklgallegos.boggle.models.Game;
 import com.mklgallegos.boggle.models.User;
 
 import butterknife.Bind;
@@ -39,6 +42,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     @Bind(R.id.firstNameTextView) TextView mFirstNameTextView;
     @Bind(R.id.lastNameTextView) TextView mLastNameTextView;
     @Bind(R.id.emailTextView) TextView mEmailTextView;
+    @Bind(R.id.highScoreTextView) TextView mHighScoreTextView;
 
 
     @Override
@@ -47,14 +51,55 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_account);
         ButterKnife.bind(this);
 
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mUId = mSharedPreferences.getString(Constants.KEY_UID, null);
+        mUserRef = new Firebase(Constants.FIREBASE_URL_USERS).child(mUId);
+
+        String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
+
+        Firebase firebaseUserGamesRef = new Firebase(Constants.FIREBASE_URL_GAMES + "/" + userUid);
+        Query findHighScore = firebaseUserGamesRef.orderByChild("totalPoints").limitToLast(1);
+
+        findHighScore.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.d(TAG, dataSnapshot.toString());
+
+                Game game = dataSnapshot.getValue(Game.class);
+
+                String totalPoints = game.getTotalPoints().toString();
+                Log.d(TAG, totalPoints);
+
+                mHighScoreTextView.setText(totalPoints + " points");
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
         //click listeners
         mUpdateEmailButton.setOnClickListener(this);
         mChangePasswordButton.setOnClickListener(this);
 
 
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mUId = mSharedPreferences.getString(Constants.KEY_UID, null);
-        mUserRef = new Firebase(Constants.FIREBASE_URL_USERS).child(mUId);
+
 
         mUserRefListener = mUserRef.addValueEventListener(new ValueEventListener() {
             @Override

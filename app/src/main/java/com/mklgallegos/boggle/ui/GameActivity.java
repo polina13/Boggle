@@ -40,6 +40,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.timerTextView) TextView mTimerTextView;
     public ArrayList<String> list = new ArrayList<String>();
     HashSet<String> dictionary = new HashSet<>();
+    CountDownTimer timer;
 
     Game mGame = new Game();
 
@@ -139,7 +140,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         mTestTextView.setText(generateString());
 
-        new CountDownTimer(180000, 1000) {
+        timer = new CountDownTimer(180000, 1000) {
             public void onTick(long millisUntilFinished) {
                 if (millisUntilFinished < 180000 && millisUntilFinished >= 130000 ) {
                     mTimerTextView.setText("02:" + ((millisUntilFinished / 1000) - 120));
@@ -281,8 +282,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
                     Intent intent = new Intent(GameActivity.this, ResultActivity.class);
-                    intent.putExtra("list", list);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+                    finish();
+                    timer.cancel();
                     break;
             }
         }

@@ -131,4 +131,26 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="83dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HIGH SCORE"
+        android:id="@+id/textView"
+        android:textSize="12sp"
+        android:layout_below="@+id/emailTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="high score"
+        android:id="@+id/highScoreTextView"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_alignLeft="@+id/emailTextView"
+        android:layout_alignStart="@+id/emailTextView" />
+
 </RelativeLayout>

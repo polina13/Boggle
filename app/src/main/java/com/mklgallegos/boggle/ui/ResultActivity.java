@@ -123,8 +123,11 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.playAgainButton:
                 Intent gameIntent = new Intent(ResultActivity.this, GameActivity.class);
+                gameIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(gameIntent);
+                finish();
                 break;
+
         }
     }
 }
