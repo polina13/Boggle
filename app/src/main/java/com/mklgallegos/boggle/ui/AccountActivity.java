@@ -31,9 +31,11 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     private String mUId;
     private SharedPreferences mSharedPreferences;
 
+    //buttons
     @Bind(R.id.updateEmailButton) Button mUpdateEmailButton;
+    @Bind(R.id.changePasswordButton) Button mChangePasswordButton;
 
-
+    //text views
     @Bind(R.id.firstNameTextView) TextView mFirstNameTextView;
     @Bind(R.id.lastNameTextView) TextView mLastNameTextView;
     @Bind(R.id.emailTextView) TextView mEmailTextView;
@@ -47,6 +49,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
         //click listeners
         mUpdateEmailButton.setOnClickListener(this);
+        mChangePasswordButton.setOnClickListener(this);
 
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -78,6 +81,10 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.updateEmailButton:
                 Intent intent = new Intent(AccountActivity.this, ChangeEmailActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.changePasswordButton:
+                Intent changePasswordActivityIntent = new Intent(AccountActivity.this, ChangePasswordActivity.class);
+                startActivity(changePasswordActivityIntent);
                 break;
         }
 

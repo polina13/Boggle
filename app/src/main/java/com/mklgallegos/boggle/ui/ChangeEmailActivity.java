@@ -64,11 +64,11 @@ public class ChangeEmailActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.updateEmailButton:
+
                 //grab value of inputs
                 final String oldEmail = mOldEmailEditText.getText().toString();
                 final String password = mPasswordEditText.getText().toString();
                 final String newEmail = mNewEmailEditText.getText().toString();
-
 
                 mFirebaseRef.changeEmail(oldEmail, password, newEmail, new Firebase.ResultHandler() {
                     @Override
