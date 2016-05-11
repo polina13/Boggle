@@ -37,9 +37,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private ProgressDialog mAuthProgressDialog;
 
+    //TextView
     @Bind(R.id.signUpTextView) TextView mSignUpTextView;
+    @Bind(R.id.resetPasswordTextView) TextView mResetPasswordTextView;
 
-    //button
+    //Button
     @Bind(R.id.loginButton) Button mLoginButton;
 
     //Inputs
@@ -60,6 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
 
         mSignUpTextView.setOnClickListener(this);
+        mResetPasswordTextView.setOnClickListener(this);
         mLoginButton.setOnClickListener(this);
 
         //auth progress dialog
@@ -79,6 +82,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.signUpTextView:
                 Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(intent);
+                finish();
+                break;
+            case R.id.resetPasswordTextView:
+                Intent resetPasswordIntent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+                startActivity(resetPasswordIntent);
                 finish();
                 break;
             case R.id.loginButton:
