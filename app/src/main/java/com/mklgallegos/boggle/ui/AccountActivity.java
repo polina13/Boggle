@@ -21,13 +21,15 @@ import com.mklgallegos.boggle.R;
 import com.mklgallegos.boggle.models.Game;
 import com.mklgallegos.boggle.models.User;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class AccountActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String TAG = AccountActivity.class.getSimpleName();
-
 
     private ValueEventListener mUserRefListener;
     private Firebase mUserRef;
@@ -43,6 +45,9 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     @Bind(R.id.lastNameTextView) TextView mLastNameTextView;
     @Bind(R.id.emailTextView) TextView mEmailTextView;
     @Bind(R.id.highScoreTextView) TextView mHighScoreTextView;
+    @Bind(R.id.gamesPlayedTextView) TextView mGamesPlayedTextView;
+    @Bind(R.id.avgScoreTextView) TextView mAvgScoreTextView;
+    @Bind(R.id.cumScoreTextView) TextView mCumScoreTextView;
 
 
     @Override
@@ -55,50 +60,62 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         mUId = mSharedPreferences.getString(Constants.KEY_UID, null);
         mUserRef = new Firebase(Constants.FIREBASE_URL_USERS).child(mUId);
 
-        String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
+        final String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
 
         Firebase firebaseUserGamesRef = new Firebase(Constants.FIREBASE_URL_GAMES + "/" + userUid);
-        Query findHighScore = firebaseUserGamesRef.orderByChild("totalPoints").limitToLast(1);
 
-        findHighScore.addChildEventListener(new ChildEventListener() {
+
+        Query returnAllChildNodes = new Firebase(Constants.FIREBASE_URL_GAMES).child(mUId);
+
+        returnAllChildNodes.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.d(TAG, dataSnapshot.toString());
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Long numberOfGamesPlayed = dataSnapshot.getChildrenCount();
 
-                Game game = dataSnapshot.getValue(Game.class);
 
-                String totalPoints = game.getTotalPoints().toString();
-                Log.d(TAG, totalPoints);
+                Iterable<DataSnapshot> gamesPlayed = dataSnapshot.getChildren();
 
-                mHighScoreTextView.setText(totalPoints + " points");
+                ArrayList<Integer> scores = new ArrayList<Integer>();
+
+                Integer total = 0;
+
+                for (DataSnapshot data : gamesPlayed) {
+                    Game game = data.getValue(Game.class);
+                    Integer totalPoints = game.getTotalPoints();
+
+                    scores.add(totalPoints);
+                    total += totalPoints;
+                }
+
+                Collections.sort(scores);
+
+                Integer highscore = scores.get(scores.size() - 1);
+
+
+                Double avg = total.doubleValue()/numberOfGamesPlayed.intValue();
+
+
+                Log.d(TAG, highscore.toString());
+                Log.d(TAG, total.toString());
+                Log.d(TAG, numberOfGamesPlayed.toString());
+                Log.d(TAG, avg.toString());
+
+
+                mAvgScoreTextView.setText(avg.toString());
+                mHighScoreTextView.setText(highscore + " points");
+                mGamesPlayedTextView.setText(numberOfGamesPlayed.toString());
+                mCumScoreTextView.setText(total.toString());
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) {}
         });
+
+
 
         //click listeners
         mUpdateEmailButton.setOnClickListener(this);
         mChangePasswordButton.setOnClickListener(this);
-
-
 
 
         mUserRefListener = mUserRef.addValueEventListener(new ValueEventListener() {
@@ -117,6 +134,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                 Log.d(TAG, "Read failed");
             }
         });
+
 
     }
 
