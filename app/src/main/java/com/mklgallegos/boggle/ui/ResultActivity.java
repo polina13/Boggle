@@ -54,51 +54,38 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_result);
         ButterKnife.bind(this);
 
+        //click listeners
         mPlayAgainButton.setOnClickListener(this);
 
-
-        mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
-
+        //shared preferences
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUId = mSharedPreferences.getString(Constants.KEY_UID, null);
+
+        //firebase
+        mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
         mUserRef = new Firebase(Constants.FIREBASE_URL_USERS).child(mUId);
-
-
-
         mGameLocationRef = new Firebase(Constants.FIREBASE_URL_GAMES + "/" + mUId);
 
         mGameLocationRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
                 Game game = snapshot.getValue(Game.class);
-
                 mTotalPointsValueTextView.setText(game.getTotalPoints().toString());
                 mTimestampValueTextView.setText(game.getDate().toString());
-
                 list = game.getList();
-                listArr = new String[list.size()];
-                listArr = list.toArray(listArr);
+                String[] length = new String[list.size()];
+                listArr = list.toArray(length);
                 ArrayAdapter adapter = new ArrayAdapter(getBaseContext(), android.R.layout.simple_expandable_list_item_1, listArr);
                 mListView.setAdapter(adapter);
-
             }
-
             @Override
-            public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {
-            }
-
+            public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {}
             @Override
-            public void onChildRemoved(DataSnapshot snapshot) {
-            }
-
+            public void onChildRemoved(DataSnapshot snapshot) {}
             @Override
-            public void onChildMoved(DataSnapshot snapshot, String string) {
-            }
-
+            public void onChildMoved(DataSnapshot snapshot, String string) {}
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
+            public void onCancelled(FirebaseError firebaseError) {}
         });
 
 
@@ -108,14 +95,11 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
                 User user = dataSnapshot.getValue(User.class);
                 mPlayerNameTextView.setText(user.getFirstName());
             }
-
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 Log.d(TAG, "Read failed");
             }
         });
-
-
     }
 
     @Override
@@ -127,7 +111,6 @@ public class ResultActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(gameIntent);
                 finish();
                 break;
-
         }
     }
 }

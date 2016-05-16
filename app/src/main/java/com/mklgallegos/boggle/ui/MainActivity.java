@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 mGreetingTextView.setText("Hi " + user.getFirstName() + ", let's play");
+                mUserRef.removeEventListener(this);
             }
 
             @Override
@@ -82,7 +83,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         } else if (id == R.id.manage_account) {
             Intent accountIntent = new Intent(MainActivity.this, AccountActivity.class);
+            accountIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(accountIntent);
+            finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

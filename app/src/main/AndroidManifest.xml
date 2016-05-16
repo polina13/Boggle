@@ -31,7 +31,8 @@
             android:name=".ui.ChangeEmailActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".ui.ChangePasswordActivity" />
-        <activity android:name=".ui.ResetPasswordActivity"></activity>
+        <activity android:name=".ui.ResetPasswordActivity" />
+        <activity android:name=".ui.DeleteAccountActivity"></activity>
     </application>
 
 </manifest>

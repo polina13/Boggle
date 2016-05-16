@@ -32,7 +32,6 @@ import butterknife.ButterKnife;
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String TAG = GameActivity.class.getSimpleName();
     @Bind(R.id.testTextView) TextView mTestTextView;
-    @Bind(R.id.generateNewStringButton) Button mGenerateNewStringButton;
     @Bind(R.id.shuffleStringButton) Button mShuffleStringButton;
     @Bind(R.id.addWordButton) Button mAddWordButton;
     @Bind(R.id.inputStringEditText) EditText  mInputStringEditText;
@@ -127,7 +126,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(GameActivity.this);
 
-        mGenerateNewStringButton.setOnClickListener(this);
         mShuffleStringButton.setOnClickListener(this);
         mAddWordButton.setOnClickListener(this);
         mEndRoundButton.setOnClickListener(this);
@@ -186,10 +184,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         @Override
             public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.generateNewStringButton:
-                    mTestTextView.setText(shuffleString(generateString()));
-                    list.clear();
-                    break;
                 case R.id.shuffleStringButton:
                     mTestTextView.setText(shuffleString(mTestTextView.getText().toString()));
                     break;

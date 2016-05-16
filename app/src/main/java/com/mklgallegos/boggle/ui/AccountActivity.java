@@ -39,6 +39,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
     //buttons
     @Bind(R.id.updateEmailButton) Button mUpdateEmailButton;
     @Bind(R.id.changePasswordButton) Button mChangePasswordButton;
+    @Bind(R.id.deleteAccountButton) Button mDeleteAccountButton;
 
     //text views
     @Bind(R.id.firstNameTextView) TextView mFirstNameTextView;
@@ -56,16 +57,16 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_account);
         ButterKnife.bind(this);
 
+        //shared preferences
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUId = mSharedPreferences.getString(Constants.KEY_UID, null);
-        mUserRef = new Firebase(Constants.FIREBASE_URL_USERS).child(mUId);
-
         final String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
 
+        //firebase
+        mUserRef = new Firebase(Constants.FIREBASE_URL_USERS).child(mUId);
         Firebase firebaseUserGamesRef = new Firebase(Constants.FIREBASE_URL_GAMES + "/" + userUid);
 
-
-        Query returnAllChildNodes = new Firebase(Constants.FIREBASE_URL_GAMES).child(mUId);
+        final Query returnAllChildNodes = new Firebase(Constants.FIREBASE_URL_GAMES).child(mUId);
 
         returnAllChildNodes.addValueEventListener(new ValueEventListener() {
             @Override
@@ -94,17 +95,17 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
                 Double avg = total.doubleValue()/numberOfGamesPlayed.intValue();
 
-
                 Log.d(TAG, highscore.toString());
                 Log.d(TAG, total.toString());
                 Log.d(TAG, numberOfGamesPlayed.toString());
                 Log.d(TAG, avg.toString());
 
-
                 mAvgScoreTextView.setText(avg.toString());
                 mHighScoreTextView.setText(highscore + " points");
                 mGamesPlayedTextView.setText(numberOfGamesPlayed.toString());
                 mCumScoreTextView.setText(total.toString());
+
+                returnAllChildNodes.removeEventListener(this);
             }
 
             @Override
@@ -116,6 +117,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         //click listeners
         mUpdateEmailButton.setOnClickListener(this);
         mChangePasswordButton.setOnClickListener(this);
+        mDeleteAccountButton.setOnClickListener(this);
 
 
         mUserRefListener = mUserRef.addValueEventListener(new ValueEventListener() {
@@ -126,6 +128,8 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
                 mFirstNameTextView.setText(user.getFirstName());
                 mLastNameTextView.setText(user.getLastName());
                 mEmailTextView.setText(user.getEmail());
+
+                mUserRef.removeEventListener(this);
 
             }
 
@@ -148,6 +152,12 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.changePasswordButton:
                 Intent changePasswordActivityIntent = new Intent(AccountActivity.this, ChangePasswordActivity.class);
                 startActivity(changePasswordActivityIntent);
+                break;
+            case R.id.deleteAccountButton:
+                Intent deleteAccountActivityIntent = new Intent(AccountActivity.this, DeleteAccountActivity.class);
+                deleteAccountActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(deleteAccountActivityIntent);
+                finish();
                 break;
         }
 
