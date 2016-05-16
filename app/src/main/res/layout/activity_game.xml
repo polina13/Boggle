@@ -10,17 +10,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ui.GameActivity">
 
-    <TextView
+    <GridView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
-        android:id="@+id/testTextView"
-        android:textSize="40sp"
+        android:id="@+id/gridView"
+        android:textSize="10sp"
         android:textColor="@color/white"
         android:letterSpacing="0.1"
         android:layout_below="@+id/timerTextView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp" />
+        android:layout_marginTop="20dp"
+        android:numColumns="4"
+        nu
+        android:layout_above="@+id/inputStringEditText" />
 
 
     <Button
@@ -31,9 +34,8 @@
         android:background="@color/white"
         android:textColor="@color/black"
         android:width="40dp"
-        android:layout_below="@+id/testTextView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp" />
+        android:layout_below="@+id/inputStringEditText"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -60,10 +62,10 @@
         android:textColor="@color/black"
         android:id="@+id/addWordButton"
         android:width="200dp"
-        android:layout_marginTop="116dp"
-        android:layout_below="@+id/shuffleStringButton"
+        android:layout_above="@+id/endRoundButton"
         android:layout_alignLeft="@+id/inputStringEditText"
-        android:layout_alignStart="@+id/inputStringEditText" />
+        android:layout_alignStart="@+id/inputStringEditText"
+        android:layout_marginBottom="67dp" />
 
     <Button
         android:layout_width="match_parent"
@@ -85,6 +87,5 @@
         android:textSize="40sp"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
