@@ -2,6 +2,7 @@ package com.mklgallegos.boggle.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +11,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.mklgallegos.boggle.Constants;
+import com.mklgallegos.boggle.ImageAdapter;
 import com.mklgallegos.boggle.R;
 import com.mklgallegos.boggle.models.Game;
 
@@ -31,7 +34,7 @@ import butterknife.ButterKnife;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String TAG = GameActivity.class.getSimpleName();
-    @Bind(R.id.testTextView) TextView mTestTextView;
+    @Bind(R.id.testGridView) GridView mTestGridView;
     @Bind(R.id.shuffleStringButton) Button mShuffleStringButton;
     @Bind(R.id.addWordButton) Button mAddWordButton;
     @Bind(R.id.inputStringEditText) EditText  mInputStringEditText;
@@ -135,8 +138,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         Log.d(TAG, dictSizeString);
 
-
-        mTestTextView.setText(generateString());
+        mTestGridView.setAdapter(new ImageAdapter(GameActivity.this, R.layout.fragment_image_grid_holder, R.drawable.dice, list));
 
         timer = new CountDownTimer(180000, 1000) {
             public void onTick(long millisUntilFinished) {
@@ -185,12 +187,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.shuffleStringButton:
-                    mTestTextView.setText(shuffleString(mTestTextView.getText().toString()));
-                    break;
+//                    mTestGridView.setText(shuffleString(mTestGridView.getText().toString()));
+//                    break;
                 case R.id.addWordButton:
                     //collect input
                     String userInput = mInputStringEditText.getText().toString();
-                    String randomGeneratedString = mTestTextView.getText().toString();
+                    String randomGeneratedString = mTestGridView.getPositionForView().Text().toString();
 
                     char[] randomCharArray = randomGeneratedString.toCharArray();
 

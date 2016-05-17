@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
-        android:id="@+id/gridView"
+        android:id="@+id/testGridView"
         android:textSize="10sp"
         android:textColor="@color/white"
         android:letterSpacing="0.1"
@@ -22,7 +22,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:numColumns="4"
-        nu
         android:layout_above="@+id/inputStringEditText" />
 
 
